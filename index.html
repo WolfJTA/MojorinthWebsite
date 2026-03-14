@@ -129,6 +129,22 @@
       color: #000 !important;
     }
 
+    .nav-issues {
+      border: 1px solid var(--border) !important;
+      border-radius: 8px !important;
+      padding: 0.45rem 1.1rem !important;
+      color: var(--muted) !important;
+      font-weight: 600 !important;
+      font-size: 0.875rem !important;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s !important;
+    }
+
+    .nav-issues:hover {
+      border-color: rgba(27, 217, 106, 0.4) !important;
+      color: var(--green) !important;
+      transform: translateY(-1px);
+    }
+
     /* ── Hero ── */
     .hero {
       position: relative;
@@ -635,6 +651,13 @@
       margin-bottom: 1.75rem;
     }
 
+    .contact-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
     .discord-btn {
       display: inline-flex;
       align-items: center;
@@ -704,6 +727,7 @@
       .nav-links { display: none; }
       .hero-buttons { flex-direction: column; align-items: center; }
       .contact-card { padding: 2rem 1.5rem; }
+      .contact-buttons { flex-direction: column; align-items: center; }
     }
   </style>
 </head>
@@ -722,6 +746,7 @@
       <li><a href="#setup">Setup</a></li>
       <li><a href="#changelog">Changelog</a></li>
       <li><a href="#faq">FAQ</a></li>
+      <li><a href="https://github.com/WolfJTA/Mojorinth/issues" target="_blank" class="nav-issues">Issue Tracker</a></li>
       <li><a href="#contact" class="nav-cta">Contact</a></li>
     </ul>
   </nav>
@@ -919,7 +944,7 @@
 
       <details>
         <summary>Do I need Mojo Launcher?</summary>
-        <p>It is techniacally optional, HOWEVER Mojorinth is a companion app for Mojo Launcher. It manages files inside Mojo's <code>instances</code> folder and launches Mojo directly. Without Mojo Launcher installed, most features won't work.</p>
+        <p>It is technically optional, HOWEVER Mojorinth is a companion app for Mojo Launcher. It manages files inside Mojo's <code>instances</code> folder and launches Mojo directly. Without Mojo Launcher installed, most features won't work.</p>
       </details>
 
       <details>
@@ -929,12 +954,12 @@
 
       <details>
         <summary>Why does Mojorinth switch my renderer to LTW?</summary>
-        <p>Mods like Sodium and Iris use OpenGL calls that are incompatible with All other Mojo renderers. Mojorinth detects these mods and automatically switches to LTW (GL4ES) so the game actually runs. You can change the renderer manually in Mojo Launcher if needed. (Not recommended however)</p>
+        <p>Mods like Sodium and Iris use OpenGL calls that are incompatible with all other Mojo renderers. Mojorinth detects these mods and automatically switches to LTW (GL4ES) so the game actually runs. You can change the renderer manually in Mojo Launcher if needed. (Not recommended however)</p>
       </details>
 
       <details>
         <summary>Can I use mods not on Modrinth?</summary>
-        <p>Yes! You can use the Instance Manager to view any files in your instance folders, regardless of where they came from. Downloading requires Modrinth, but managing works for all files. Reach out to me on dc if you have any ideas for how to incorporate other mod sites</p>
+        <p>Yes! You can use the Instance Manager to view any files in your instance folders, regardless of where they came from. Downloading requires Modrinth, but managing works for all files. Reach out to me on Discord if you have any ideas for how to incorporate other mod sites.</p>
       </details>
 
       <details>
@@ -963,17 +988,22 @@
       <div class="discord-avatar">@</div>
       <h3>WolfJTA</h3>
       <p class="handle">Developer of Mojorinth</p>
-      <a href="discord://discord.com/users/1066423261094744104"
-         onclick="setTimeout(()=>window.open('https://discord.com/users/1066423261094744104','_blank'),500)"
-         class="discord-btn">
-        Open in Discord
-      </a>
+      <div class="contact-buttons">
+        <a href="discord://discord.com/users/1066423261094744104"
+           onclick="setTimeout(()=>window.open('https://discord.com/users/1066423261094744104','_blank'),500)"
+           class="discord-btn">
+          Open in Discord
+        </a>
+        <a href="https://github.com/WolfJTA/Mojorinth/issues" target="_blank" class="btn-secondary">
+          🐛 Issue Tracker
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <p>by <a href="discord://discord.com/users/1066423261094744104">WolfJTA</a> · <a href="https://github.com/WolfJTA/Mojorinth" target="_blank">GitHub</a> · Not affiliated with Modrinth or Mojo Launcher</p>
+    <p>by <a href="discord://discord.com/users/1066423261094744104">WolfJTA</a> · <a href="https://github.com/WolfJTA/Mojorinth" target="_blank">GitHub</a> · <a href="https://github.com/WolfJTA/Mojorinth/issues" target="_blank">Issues</a> · Not affiliated with Modrinth or Mojo Launcher</p>
   </footer>
 
   <!-- Scroll reveal -->
