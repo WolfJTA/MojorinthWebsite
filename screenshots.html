@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Screenshots — Mojorinth</title>
+  <link rel="icon" type="image/webp" href="Favicon_clear.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --green:      #1BD96A;
+      --green-dim:  #0fa84d;
+      --green-glow: rgba(27, 217, 106, 0.18);
+      --bg:         #0d1117;
+      --surface:    #161f2e;
+      --border:     rgba(27, 217, 106, 0.12);
+      --text:       #e8f0ea;
+      --muted:      rgba(232, 240, 234, 0.5);
+      --radius:     16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 64px;
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: rgba(244, 162, 135, 0.12);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    .nav-icon img { width: 24px; height: 24px; object-fit: contain; }
+
+    .nav-brand span {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-back {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.45rem 1.1rem;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .nav-back:hover {
+      border-color: rgba(27, 217, 106, 0.4);
+      color: var(--green);
+      transform: translateY(-1px);
+    }
+
+    /* ── Page ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 110px clamp(1.5rem, 5vw, 4rem) 80px;
+    }
+
+    .page-header {
+      margin-bottom: 3rem;
+      animation: fadeUp 0.45s ease forwards;
+    }
+
+    .section-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3rem);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    /* ── Groups ── */
+    .group {
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .group.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .group-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .group-header h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    .group-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    .group-count {
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.15rem 0.6rem;
+      font-weight: 500;
+    }
+
+    /* ── Screenshot grid ── */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+
+    .screenshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .screenshot-card:hover {
+      border-color: rgba(27, 217, 106, 0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    }
+
+    .screenshot-card img {
+      width: 100%;
+      aspect-ratio: 9/16;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .screenshot-card:hover img {
+      transform: scale(1.03);
+    }
+
+    .screenshot-label {
+      padding: 0.65rem 0.9rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,0.88);
+      backdrop-filter: blur(12px);
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: 420px;
+      width: 100%;
+      animation: lbIn 0.2s ease;
+    }
+
+    @keyframes lbIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .lightbox-inner img {
+      width: 100%;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      display: block;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+
+    .lightbox-caption {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.9rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .lightbox-close:hover {
+      color: var(--green);
+      border-color: rgba(27, 217, 106, 0.4);
+    }
+
+    /* Nav arrows */
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .lightbox-nav:hover {
+      color: var(--green);
+      border-color: rgba(27, 217, 106, 0.4);
+    }
+
+    .lightbox-prev { left: -50px; }
+    .lightbox-next { right: -50px; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2.5rem clamp(1.5rem, 5vw, 4rem);
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer a { color: var(--green); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 640px) {
+      .screenshot-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+      .lightbox-prev { left: -14px; }
+      .lightbox-next { right: -14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="index.html">
+      <div class="nav-icon">
+        <img src="Favicon_clear.png" alt="Mojorinth icon" />
+      </div>
+      <span>Mojorinth</span>
+    </a>
+    <a href="index.html" class="nav-back">← Back to Home</a>
+  </nav>
+
+  <!-- PAGE -->
+  <div class="page">
+    <div class="page-header">
+      <p class="section-label">Gallery</p>
+      <h1>Screenshots</h1>
+      <p class="subtitle">A look at Mojorinth in action.</p>
+    </div>
+
+    <!-- GROUP: Home / Navigation -->
+    <div class="group">
+      <div class="group-header">
+        <h2>🧭 Home &amp; Navigation</h2>
+        <div class="group-line"></div>
+        <span class="group-count">2</span>
+      </div>
+      <div class="screenshot-grid">
+        <div class="screenshot-card" onclick="openLightbox('Sidebar.jpeg', 'Sidebar')">
+          <img src="Sidebar.jpeg" alt="Sidebar" loading="lazy" />
+          <div class="screenshot-label">Sidebar</div>
+        </div>
+        <div class="screenshot-card" onclick="openLightbox('Instance Picker.jpeg', 'Instance Picker')">
+          <img src="Instance Picker.jpeg" alt="Instance Picker" loading="lazy" />
+          <div class="screenshot-label">Instance Picker</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUP: Browsing & Installing -->
+    <div class="group">
+      <div class="group-header">
+        <h2>🧩 Browsing &amp; Installing</h2>
+        <div class="group-line"></div>
+        <span class="group-count">3</span>
+      </div>
+      <div class="screenshot-grid">
+        <div class="screenshot-card" onclick="openLightbox('Browse.jpeg', 'Browse')">
+          <img src="Browse.jpeg" alt="Browse" loading="lazy" />
+          <div class="screenshot-label">Browse</div>
+        </div>
+        <div class="screenshot-card" onclick="openLightbox('Mod Screen.jpeg', 'Mod Screen')">
+          <img src="Mod Screen.jpeg" alt="Mod Screen" loading="lazy" />
+          <div class="screenshot-label">Mod Screen</div>
+        </div>
+        <div class="screenshot-card" onclick="openLightbox('Version Picker.jpeg', 'Version Picker')">
+          <img src="Version Picker.jpeg" alt="Version Picker" loading="lazy" />
+          <div class="screenshot-label">Version Picker</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUP: Instance Management -->
+    <div class="group">
+      <div class="group-header">
+        <h2>⚙️ Instance Management</h2>
+        <div class="group-line"></div>
+        <span class="group-count">1</span>
+      </div>
+      <div class="screenshot-grid">
+        <div class="screenshot-card" onclick="openLightbox('Instance Manager.jpeg', 'Instance Manager')">
+          <img src="Instance Manager.jpeg" alt="Instance Manager" loading="lazy" />
+          <div class="screenshot-label">Instance Manager</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUP: Tools -->
+    <div class="group">
+      <div class="group-header">
+        <h2>🔧 Tools</h2>
+        <div class="group-line"></div>
+        <span class="group-count">3</span>
+      </div>
+      <div class="screenshot-grid">
+        <div class="screenshot-card" onclick="openLightbox('Log Analyzer.jpeg', 'Log Analyzer')">
+          <img src="Log Analyzer.jpeg" alt="Log Analyzer" loading="lazy" />
+          <div class="screenshot-label">Log Analyzer</div>
+        </div>
+        <div class="screenshot-card" onclick="openLightbox('Stats.jpeg', 'Stats')">
+          <img src="Stats.jpeg" alt="Stats" loading="lazy" />
+          <div class="screenshot-label">Stats</div>
+        </div>
+        <div class="screenshot-card" onclick="openLightbox('Export.jpeg', 'Export')">
+          <img src="Export.jpeg" alt="Export" loading="lazy" />
+          <div class="screenshot-label">Export</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUP: Other -->
+    <div class="group">
+      <div class="group-header">
+        <h2>✨ Other</h2>
+        <div class="group-line"></div>
+        <span class="group-count">3</span>
+      </div>
+      <div class="screenshot-grid">
+        <div class="screenshot-card" onclick="openLightbox('Splash Screen.jpeg', 'Splash Screen')">
+          <img src="Splash Screen.jpeg" alt="Splash Screen" loading="lazy" />
+          <div class="screenshot-label">Splash Screen</div>
+        </div>
+        <div class="screenshot-card" onclick="openLightbox('Settings.jpeg', 'Settings')">
+          <img src="Settings.jpeg" alt="Settings" loading="lazy" />
+          <div class="screenshot-label">Settings</div>
+        </div>
+        <div class="screenshot-card" onclick="openLightbox('Notification.jpeg', 'Notification')">
+          <img src="Notification.jpeg" alt="Notification" loading="lazy" />
+          <div class="screenshot-label">Notification</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page -->
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+      <button class="lightbox-nav lightbox-prev" onclick="stepLightbox(-1)">‹</button>
+      <button class="lightbox-nav lightbox-next" onclick="stepLightbox(1)">›</button>
+      <img id="lightbox-img" src="" alt="" />
+      <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>by <a href="discord://discord.com/users/1066423261094744104">WolfJTA</a> · <a href="https://github.com/WolfJTA/Mojorinth" target="_blank">GitHub</a> · <a href="https://github.com/WolfJTA/Mojorinth/issues" target="_blank">Issues</a> · Not affiliated with Modrinth or Mojo Launcher</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          e.target.style.transitionDelay = (i * 0.06) + 's';
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.group').forEach(el => observer.observe(el));
+
+    // Lightbox
+    const allCards = [...document.querySelectorAll('.screenshot-card')];
+    let currentIndex = 0;
+
+    function openLightbox(src, label) {
+      currentIndex = allCards.findIndex(c => c.querySelector('img').alt === label);
+      setLightbox(src, label);
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function setLightbox(src, label) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-img').alt = label;
+      document.getElementById('lightbox-caption').textContent = label;
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closeLightboxOnBg(e) {
+      if (e.target === document.getElementById('lightbox')) closeLightbox();
+    }
+
+    function stepLightbox(dir) {
+      currentIndex = (currentIndex + dir + allCards.length) % allCards.length;
+      const img = allCards[currentIndex].querySelector('img');
+      setLightbox(img.src, img.alt);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') stepLightbox(1);
+      if (e.key === 'ArrowLeft') stepLightbox(-1);
+    });
+  </script>
+
+</body>
+</html>
