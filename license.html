@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>License — Mojorinth</title>
+  <link rel="icon" type="image/webp" href="Favicon_clear.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --green:      #1BD96A;
+      --green-dim:  #0fa84d;
+      --green-glow: rgba(27, 217, 106, 0.18);
+      --bg:         #0d1117;
+      --surface:    #161f2e;
+      --border:     rgba(27, 217, 106, 0.12);
+      --text:       #e8f0ea;
+      --muted:      rgba(232, 240, 234, 0.5);
+      --radius:     16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 64px;
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(244, 162, 135, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .nav-icon img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    .nav-brand span {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-back {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.45rem 1.1rem;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-back:hover {
+      border-color: rgba(27, 217, 106, 0.4);
+      color: var(--green);
+      transform: translateY(-1px);
+    }
+
+    /* ── Page ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 120px clamp(1.5rem, 5vw, 4rem) 80px;
+    }
+
+    /* Radial glow */
+    .page::before {
+      content: '';
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(27, 217, 106, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3rem);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    /* ── License box ── */
+    .license-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .license-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(27, 217, 106, 0.3), transparent);
+    }
+
+    .license-box-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(27, 217, 106, 0.03);
+    }
+
+    .license-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px rgba(27, 217, 106, 0.5);
+      flex-shrink: 0;
+    }
+
+    .license-box-header span {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .license-box-header .copy-btn {
+      margin-left: auto;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.3rem 0.75rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .license-box-header .copy-btn:hover {
+      border-color: rgba(27, 217, 106, 0.4);
+      color: var(--green);
+    }
+
+    .license-text {
+      padding: 1.75rem;
+      font-family: 'DM Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 0.82rem;
+      line-height: 1.85;
+      color: var(--muted);
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 600px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(27, 217, 106, 0.2) transparent;
+    }
+
+    .license-text::-webkit-scrollbar {
+      width: 6px;
+    }
+    .license-text::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .license-text::-webkit-scrollbar-thumb {
+      background: rgba(27, 217, 106, 0.2);
+      border-radius: 3px;
+    }
+
+    /* Highlight certain lines */
+    .license-text .highlight {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    /* ── Note card ── */
+    .note-card {
+      margin-top: 1.25rem;
+      background: rgba(27, 217, 106, 0.05);
+      border: 1px solid rgba(27, 217, 106, 0.2);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      gap: 0.9rem;
+      align-items: flex-start;
+    }
+
+    .note-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    .note-card p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .note-card a {
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    .note-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2.5rem clamp(1.5rem, 5vw, 4rem);
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer a {
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Fade in ── */
+    .page-header, .license-box, .note-card {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    .license-box  { animation-delay: 0.1s; }
+    .note-card    { animation-delay: 0.2s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="index.html">
+      <div class="nav-icon">
+        <img src="Favicon_clear.png" alt="Mojorinth icon" />
+      </div>
+      <span>Mojorinth</span>
+    </a>
+    <a href="index.html" class="nav-back">← Back to Home</a>
+  </nav>
+
+  <!-- PAGE -->
+  <div class="page">
+    <div class="page-header">
+      <p class="section-label">Legal</p>
+      <h1>License</h1>
+      <p class="subtitle">Copyright © 2026 WolfJTA · All Rights Reserved</p>
+    </div>
+
+    <div class="license-box">
+      <div class="license-box-header">
+        <div class="license-dot"></div>
+        <span>LICENSE</span>
+        <button class="copy-btn" onclick="copyLicense()">Copy</button>
+      </div>
+      <pre class="license-text" id="licenseText"><span class="highlight">Copyright (c) 2026 WolfJTA. All Rights Reserved.</span>
+
+This software and its source code ("Mojorinth") are the exclusive property
+of WolfJTA. The following restrictions apply to any person obtaining a copy
+of this software, associated documentation, or any related files:
+
+Do note, i will likely be more than happy to give you rights to modify,
+redistribute, integrate this code if you reach out to me via discord.
+I only have such a strict license due to the fear of getting code stolen.
+I am more than happy to accommodate your needs :)
+
+<span class="highlight">1. PERMITTED USE</span>
+   You may view this source code for personal, educational, and reference
+   purposes only.
+
+<span class="highlight">2. RESTRICTIONS</span>
+   Without explicit prior written permission from WolfJTA, you may NOT:
+
+   a) Copy, reproduce, or duplicate this software or any portion of it;
+   b) Modify, adapt, translate, or create derivative works based on it;
+   c) Distribute, publish, sublicense, sell, or otherwise transfer this
+      software or any portion of it to any third party;
+   d) Use this software or any portion of it in any other project,
+      product, or service, whether commercial or non-commercial;
+   e) Remove or alter any copyright, trademark, or other proprietary
+      notices contained within the software.
+
+<span class="highlight">3. REQUESTING PERMISSION</span>
+   To request permission for any use not explicitly permitted above,
+   contact WolfJTA on Discord: WolfJTA (discord.com/users/1066423261094744104)
+   or jordanthomasaugustine@gmail.com
+   (i might respond to email slower, discord is much preferred)
+
+<span class="highlight">4. DISCLAIMER</span>
+   THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED. IN NO EVENT SHALL WOLFJTA BE LIABLE FOR ANY
+   CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THIS
+   SOFTWARE.
+
+<span class="highlight">5. TERMINATION</span>
+   Any rights granted under this license terminate immediately upon
+   breach of any of the above restrictions.</pre>
+    </div>
+
+    <div class="note-card">
+      <div class="note-icon">💬</div>
+      <p>Contact via <a href="discord://discord.com/users/1066423261094744104" onclick="setTimeout(()=>window.open('https://discord.com/users/1066423261094744104','_blank'),500)">Discord</a> (preferred) or <a href="mailto:jordanthomasaugustine@gmail.com">email</a>.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>by <a href="discord://discord.com/users/1066423261094744104">WolfJTA</a> · <a href="https://github.com/WolfJTA/Mojorinth" target="_blank">GitHub</a> · <a href="https://github.com/WolfJTA/Mojorinth/issues" target="_blank">Issues</a> · Not affiliated with Modrinth or Mojo Launcher</p>
+  </footer>
+
+  <script>
+    function copyLicense() {
+      const text = document.getElementById('licenseText').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>
